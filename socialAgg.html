@@ -1,0 +1,146 @@
+<head>
+  <title>socialAgg</title>
+</head>
+
+<body>
+	{{> websiteAddForm}}
+</body>
+
+<template name="ApplicationLayout">
+	{{> yield "navbar"}}
+
+	{{> yield "main"}}
+
+</template>
+
+<template name="navbar">
+
+	<!-- navbar start -->
+	
+	<nav class="navbar navbar-default">
+	  	<div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">Social Aggregator</a>
+		    	{{#if currentUser}}
+			      	<button type="button" class="btn btn-toolbar btn-sm add-btn js-display-modal" aria-label="Left Align">
+	  					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				{{/if}}
+		    </div>
+		    <div class="nav navbar-nav navbar-right">
+		    	{{> loginButtons}}
+		    </div><!-- /.navbar-right -->
+	  	</div><!-- /.container-fluid -->
+	</nav>
+
+	<!-- navbar end -->
+</template>
+
+<template name="websiteAddForm">
+	<div class="modal fade" tabindex="-1" role="dialog" id="websiteAddForm">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title text-capitalize">add a website url</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="input-group">
+  				<span class="input-group-addon" id="basic-addon3-link">http://</span>
+  				<input type="text" class="form-control" id="websiteAddFormWeburl" aria-describedby="basic-addon3">
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary js-websiteAddForm-save">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</template>
+
+<template name="webContents">
+	<div class="jumbotron">
+		<div class="container">
+			<div class="row">
+				{{#each linkDetails}}
+					<div class="col-xs-12 col-md-12 col-lg-6">
+						<a href="/link/{{_id}}">
+							<div class="row panel panel-default panel-height">
+								<div class="panel-body">
+									<div class="col-xs-3 col-md-3 col-lg-3">
+										<div id="carousel-{{_id}}-generic" class="carousel slide" data-ride="carousel">
+										  <!-- Wrapper for slides -->
+										  	<ol class="carousel-indicators">
+										  		{{#each images}}
+											    <li data-target="#carousel-{{_id}}-generic" data-slide-to="{{index}}" class="{{active}}"></li>
+										  		{{/each}}
+											</ol>
+										  	<div class="carousel-inner carousel-height" role="listbox">
+										  		{{#each images}}
+												    <div class="item {{active}}">
+												      <img src="{{url}}" alt="{{alt}}">
+												      <div class="carousel-caption">
+												      	<p>{{alt}}</p>
+												      </div>
+												    </div>
+											    {{/each}}
+										  	</div>
+											<a class="left carousel-control" href="#carousel-{{_id}}-generic" role="button" data-slide="prev">
+											    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+											    <span class="sr-only">Previous</span>
+											</a>
+											<a class="right carousel-control" href="#carousel-{{_id}}-generic" role="button" data-slide="next">
+											    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+											    <span class="sr-only">Next</span>
+											</a>
+										</div> <!-- //carousel -->
+										<div>
+											{{#if currentUser}}
+										      	<button type="button" class="btn btn-toolbar btn-sm add-btn js-upVote" aria-label="Left Align">
+								  					<i class="fa fa-thumbs-up"></i>
+												</button>
+												<button type="button" class="btn btn-toolbar btn-sm add-btn js-downVote" aria-label="Left Align">
+								  					<i class="fa fa-thumbs-down"></i>
+												</button>
+											{{/if}}
+										</div>
+									</div>
+									<div class="col-xs-9 col-md-9 col-lg-9">
+										<div class="title-height"><span>{{title}}</span></div><br>
+										<div class="tags">
+											{{#each keywords}}
+												<span class="label label-primary">{{tag}}</span>
+											{{/each}}
+										</div>
+									</div>
+								</div> <!-- //panel body -->
+							</div> <!-- row -->
+						</a>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="descriptionTemplate">
+	<div class="jumbotron">
+		<div class="container">
+			{{linkDetails.description}}
+		</div>
+		<h4>Comments</h4>
+	      	{{#each linkComments}}
+		        <div class="comment editable-text-trigger">
+		          <div class="comment-info"><strong>{{#if currentUser}}{{user}}{{else}}Anonymous{{/if}}</strong> commented on {{timestamp}}</div>
+		          {{> editableText collection="comments" field="text" textarea=true removeEmpty=true acceptEmpty=true trustHTML=true substitute='<i class="fa fa-pencil"></i>' class="comment-text" inputClass="comment-input"}}
+		        </div>
+	      	{{/each}}
+	      	{{#with linkId=linkDetails._id}}
+		        <span class="btn btn-default editable-text-trigger">
+		          <i class="fa fa-plus"></i>{{> editableText collection="linkComments" field="text" autoInsert=false }}
+		        </span>
+	      	{{/with}}
+	</div>
+</template>
