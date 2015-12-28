@@ -21,19 +21,19 @@ Router.route('/',function(){
 	});
 });
 
-Router.route('/link/:_id',function(){
-	this.render('descriptionTemplate',{
-		to:'main',
-		data:function(){
-			var details = LinkDetails.findOne({_id:this.params._id});
-			var comments = LinkComments.find({linkId:this.params._id});
-			return {linkDetails:details,linkComments:comments};
-		}
-	});
-	this.render('navbar',{
-		to:'navbar'
-	});
-});
+// Router.route('/link/:_id',function(){
+// 	this.render('descriptionTemplate',{
+// 		to:'main',
+// 		data:function(){
+// 			var details = LinkDetails.findOne({_id:this.params._id});
+// 			var comments = LinkComments.find({linkId:this.params._id});
+// 			return {linkDetails:details,linkComments:comments};
+// 		}
+// 	});
+// 	this.render('navbar',{
+// 		to:'navbar'
+// 	});
+// });
 
 Template.navbar.events({
 	'click .js-display-modal': function(event){
