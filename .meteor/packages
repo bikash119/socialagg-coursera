@@ -22,7 +22,6 @@ http
 blaze-html-templates
 iron:router
 babrahams:editable-text-wysiwyg-bootstrap-3
-twbs:bootstrap-noglyph
 fortawesome:fontawesome
 meteorhacks:fast-render
 babrahams:editable-list
