@@ -82,5 +82,9 @@ Template.descriptionTemplate.events({});
 			return {text:''};
 		}
 		
+	},
+	timestamp: function() {
+	  var time = (new Date(this.timestamp)).toDateString();
+	  return time.substr(0, time.length - 4);	
 	}
 });
