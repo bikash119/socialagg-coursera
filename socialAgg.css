@@ -29,29 +29,7 @@
 	height: 180px;
 }
 
-.comment-info {
-  color: #969670;
-  font-size: smaller;
-  padding: 8px 20px 6px;
-  background-color: #ffeecc;
-  border-bottom: 1px solid #ccdcc9;
-  border-radius: 10px 10px 0 0;
-}
-
-.comment-text {
-  margin: 5px 20px 10px 20px;
-  display: inline-block;
-}
-
-.comment-input {
-  border-radius: 10px;
-  padding: 10px 20px !important;
-  width: 96.5% !important;	
-}
-
-.comment {
-  border-radius: 10px;
-  background-color: #fff;
-  margin: 10px 0;
-  border: 1px solid #ccdcc9;
+.count-badge{
+  padding-left:0;
+  padding-right:0;
 }
