@@ -16,6 +16,10 @@ Meteor.publish("linkTagTaste",function(){
 	return LinkTagTaste.find();
 });
 
+Meteor.publish("linkComments",function(){
+	return LinkComments.find();
+});
+
 Meteor.methods({
 	createLink: function(webUrl){
 		console.log("meta fetch called for url "+webUrl);

@@ -5,6 +5,7 @@ LinkComments = new Mongo.Collection("linkComments");
 
 Meteor.subscribe("linkDetails");
 Meteor.subscribe("linkTagTaste");
+Meteor.subscribe("linkComments");
 
 // IRON Router
 
@@ -21,17 +22,18 @@ Router.route('/',function(){
 	});
 });
 
+
 Router.route('/link/:_id',function(){
+	this.render('navbar',{
+		to:'navbar'
+	});
+
 	this.render('descriptionTemplate',{
 		to:'main',
 		data:function(){
-			var details = LinkDetails.findOne({_id:this.params._id});
-			var comments = LinkComments.find({linkId:this.params._id});
-			return {linkDetails:details,linkComments:comments};
+			var linkInfo = LinkDetails.findOne({_id:this.params._id});
+			return linkInfo;
 		}
-	});
-	this.render('navbar',{
-		to:'navbar'
 	});
 });
 
@@ -69,3 +71,16 @@ Template.webContents.events({
 });
 
 Template.descriptionTemplate.events({});
+
+ Template.descriptionTemplate.helpers({
+	comments : function(){
+		console.log("comments invoked :: "+this._id);
+		var comments = LinkComments.find({linkId:this._id});
+		if(comments){
+			return comments;	
+		}else{
+			return {text:''};
+		}
+		
+	}
+});

@@ -88,11 +88,11 @@
 											    {{/each}}
 										  	</div>
 											<a class="left carousel-control" href="#carousel-{{_id}}-generic" role="button" data-slide="prev">
-											    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+											    <span class="fa fa-chevron-right" aria-hidden="true"></span>
 											    <span class="sr-only">Previous</span>
 											</a>
 											<a class="right carousel-control" href="#carousel-{{_id}}-generic" role="button" data-slide="next">
-											    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+											    <span class="fa fa-chevron-left" aria-hidden="true"></span>
 											    <span class="sr-only">Next</span>
 											</a>
 										</div> <!-- //carousel -->
@@ -126,21 +126,23 @@
 </template>
 
 <template name="descriptionTemplate">
-	<div class="jumbotron">
-		<div class="container">
-			{{linkDetails.description}}
-		</div>
-		<h4>Comments</h4>
-	      	{{#each linkComments}}
-		        <div class="comment editable-text-trigger">
-		          <div class="comment-info"><strong>{{#if currentUser}}{{user}}{{else}}Anonymous{{/if}}</strong> commented on {{timestamp}}</div>
-		          {{> editableText collection="comments" field="text" textarea=true removeEmpty=true acceptEmpty=true trustHTML=true substitute='<i class="fa fa-pencil"></i>' class="comment-text" inputClass="comment-input"}}
-		        </div>
-	      	{{/each}}
-	      	{{#with linkId=linkDetails._id}}
-		        <span class="btn btn-default editable-text-trigger">
-		          <i class="fa fa-plus"></i>{{> editableText collection="linkComments" field="text" autoInsert=false }}
-		        </span>
-	      	{{/with}}
-	</div>
+	<div class="container">
+		<span class="h4 text-capitalize">comments</span>
+		{{#each comments}}
+			<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>{{#if currentUser}}{{user}}{{else}}Anonymous{{/if}} commented on {{timestamp}}</strong>
+					</div>
+				<div class="panel-body">
+  					{{> editableText collection="linkComments" field="text" textarea=true removeEmpty=true acceptEmpty=true trustHTML=true substitute='<i class="fa fa-pencil"></i>' class="comment-text" inputClass="comment-input"}}
+      			</div>
+			</div>
+			{{/each}}
+	
+		{{#with linkId=_id}}
+        	<span class="btn btn-default editable-text-trigger">
+          		<i class="fa fa-plus"></i>{{> editableText collection="linkComments" field="text" autoInsert=true beforeInsert="addTimestampToDoc"}}
+        	</span>
+  		{{/with}}
+  	</div>
 </template>
